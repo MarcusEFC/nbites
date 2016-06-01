@@ -45,7 +45,7 @@ def gameReady(player):
         player.inKickingState = False
         player.brain.fallController.enabled = True
         player.brain.nav.stand()
-        player.brain.tracker.repeatBasicPan()
+        player.brain.tracker.switchTo('snapPan')
         player.timeReadyBegan = player.brain.time
         if player.lastDiffState == 'gameInitial':
             player.brain.resetInitialLocalization()

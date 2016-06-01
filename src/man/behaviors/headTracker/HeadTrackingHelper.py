@@ -251,6 +251,7 @@ class HeadTrackingHelper(object):
 
         Note: Use as parameter for tracker.performHeadMove()
         """
+        print "Look to Angle in helper"
         if yaw > 55 or yaw < -55:
             pitch = 11.0
         else:
@@ -258,6 +259,16 @@ class HeadTrackingHelper(object):
 
         return (((yaw, pitch),
                  .5, 1, StiffnessModes.LOW_HEAD_STIFFNESSES),)
+
+    def lookToAngleOverTime(self, yaw, seconds):
+        print "Look to Angle Over Time in helper"
+        if yaw > 55 or yaw < -55:
+            pitch = 11.0
+        else:
+            pitch = 17.0
+
+        return (((yaw, pitch),
+            seconds, 1, StiffnessModes.LOW_HEAD_STIFFNESSES),)
 
 
 

@@ -32,6 +32,11 @@ class HeadTracker(FSA.FSA):
         self.lookDirection = None
         self.kickName = ""
 
+        # Snap Pan Variables -- don't use otherwise
+        self.currentYaw = 0;
+        self.lastMovement = 0 # 0 if pan motion, 1 if it stood still
+        self.direction = 1 # 1 is left, -1 is right
+
         # Set object variables
         self.target = self.brain.ball #default
         # target should either be ball or instance of FieldObject
@@ -60,10 +65,10 @@ class HeadTracker(FSA.FSA):
 
     def performHeadMove(self, headMove):
         """Executes the given headMove, then stops."""
-        if (headMove != self.headMove
-            or self.currentState != 'doHeadMove'):
-            self.headMove = headMove
-            self.switchTo('doHeadMove')
+        # if (headMove != self.headMove
+        #     or self.currentState != 'doHeadMove'):
+        #     self.headMove = headMove
+        #     self.switchTo('doHeadMove')
 
     def repeatHeadMove(self, headMove):
         '''Executes the given headMove, then repeats it forever.'''
@@ -116,7 +121,7 @@ class HeadTracker(FSA.FSA):
             self.bounceTrackBall()
             return
 
-        if (self.currentState is not 'fullPan' and
+        if (self.currentState is not 'snapPan' and
             self.currentState is not 'tracking'):
             self.switchTo('tracking')
 
@@ -147,6 +152,7 @@ class HeadTracker(FSA.FSA):
         """
         Look to the given yaw at an appropriate (fixed) pitch.
         """
+        print "Look to Angle in Tracker"
         self.performHeadMove(self.helper.lookToAngle(yaw))
 
     def trackSharedBall(self):
